@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance Management System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-clipboard-check"></i>
+                    <h1>Attendance Checker</h1>
+                </div>
+                <div class="date-time">
+                    <span id="current-date"></span>
+                    <span id="current-time"></span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Statistics Section -->
+            <section class="stats-section">
+                <div class="stat-card">
+                    <div class="stat-icon total">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-info">
+                        <p class="stat-label">Total Students</p>
+                        <p class="stat-value">145</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon present">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="stat-info">
+                        <p class="stat-label">Present Today</p>
+                        <p class="stat-value">138</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon absent">
+                        <i class="fas fa-times-circle"></i>
+                    </div>
+                    <div class="stat-info">
+                        <p class="stat-label">Absent Today</p>
+                        <p class="stat-value">7</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon percentage">
+                        <i class="fas fa-chart-pie"></i>
+                    </div>
+                    <div class="stat-info">
+                        <p class="stat-label">Attendance Rate</p>
+                        <p class="stat-value">95.2%</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Action Buttons -->
+            <section class="action-section">
+                <div class="action-buttons">
+                    <button class="btn btn-primary" id="mark-present">
+                        <i class="fas fa-plus"></i>
+                        Mark Present
+                    </button>
+                    <button class="btn btn-secondary" id="mark-absent">
+                        <i class="fas fa-minus"></i>
+                        Mark Absent
+                    </button>
+                    <button class="btn btn-info" id="view-report">
+                        <i class="fas fa-file-pdf"></i>
+                        Download Report
+                    </button>
+                    <button class="btn btn-warning" id="export-excel">
+                        <i class="fas fa-download"></i>
+                        Export to Excel
+                    </button>
+                </div>
+            </section>
+
+            <!-- Filter and Search -->
+            <section class="filter-section">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search student by name or ID..." id="search-input">
+                </div>
+                <div class="filter-controls">
+                    <select id="class-filter">
+                        <option value="">All Classes</option>
+                        <option value="10-A">Class 10-A</option>
+                        <option value="10-B">Class 10-B</option>
+                        <option value="12-A">Class 12-A</option>
+                        <option value="12-B">Class 12-B</option>
+                    </select>
+                    <select id="status-filter">
+                        <option value="">All Status</option>
+                        <option value="present">Present</option>
+                        <option value="absent">Absent</option>
+                        <option value="late">Late</option>
+                    </select>
+                </div>
+            </section>
+
+            <!-- Attendance Table -->
+            <section class="table-section">
+                <h2>Attendance Records</h2>
+                <div class="table-wrapper">
+                    <table class="attendance-table">
+                        <thead>
+                            <tr>
+                                <th>Roll No.</th>
+                                <th>Student Name</th>
+                                <th>Class</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                                <th>Check-in Time</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>001</td>
+                                <td>Rajesh Kumar</td>
+                                <td>10-A</td>
+                                <td>Jan 28, 2026</td>
+                                <td><span class="badge badge-present">Present</span></td>
+                                <td>09:05 AM</td>
+                                <td>
+                                    <button class="btn-icon edit" title="Edit">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="btn-icon delete" title="Delete">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>002</td>
+                                <td>Priya Sharma</td>
+                                <td>10-A</td>
+                                <td>Jan 28, 2026</td>
+                                <td><span class="badge badge-present">Present</span></td>
+                                <td>09:12 AM</td>
+                                <td>
+                                    <button class="btn-icon edit" title="Edit">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="btn-icon delete" title="Delete">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>003</td>
+                                <td>Arjun Singh</td>
+                                <td>10-B</td>
+                                <td>Jan 28, 2026</td>
+                                <td><span class="badge badge-absent">Absent</span></td>
+                                <td>-</td>
+                                <td>
+                                    <button class="btn-icon edit" title="Edit">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="btn-icon delete" title="Delete">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>004</td>
+                                <td>Neha Gupta</td>
+                                <td>10-B</td>
+                                <td>Jan 28, 2026</td>
+                                <td><span class="badge badge-late">Late</span></td>
+                                <td>09:35 AM</td>
+                                <td>
+                                    <button class="btn-icon edit" title="Edit">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="btn-icon delete" title="Delete">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>005</td>
+                                <td>Vikram Patel</td>
+                                <td>12-A</td>
+                                <td>Jan 28, 2026</td>
+                                <td><span class="badge badge-present">Present</span></td>
+                                <td>09:08 AM</td>
+                                <td>
+                                    <button class="btn-icon edit" title="Edit">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="btn-icon delete" title="Delete">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>&copy; 2026 Attendance Management System. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <!-- Modal for Mark Attendance -->
+    <div id="attendance-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Mark Attendance</h2>
+            <form>
+                <div class="form-group">
+                    <label for="student-id">Student ID:</label>
+                    <input type="text" id="student-id" placeholder="Enter student ID" required>
+                </div>
+                <div class="form-group">
+                    <label for="attendance-status">Status:</label>
+                    <select id="attendance-status" required>
+                        <option value="">Select Status</option>
+                        <option value="present">Present</option>
+                        <option value="absent">Absent</option>
+                        <option value="late">Late</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="remarks">Remarks (Optional):</label>
+                    <textarea id="remarks" placeholder="Add any remarks..."></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="button" class="btn btn-secondary" id="cancel-btn">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
